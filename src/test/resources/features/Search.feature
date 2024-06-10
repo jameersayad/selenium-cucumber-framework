@@ -3,12 +3,14 @@ Feature: Verify search
   Search for different countries
   
   Background:
-  #Given I launch application
+  Given I open browser
+  And navigate to application
   
   @tag1
   Scenario: search results
-    Given I am on "Home" page
-    When I enter "transformation" in the "search" field
-    And I click on "search" button
-    Then I am on "results" page
+    And I am on "Home" page
+    And the title is "Wikipedia"
+    When I enter "uncommon word" in the "searchTextBox"
+    And I click on "searchButton"
+    Then I am on "SearchResults" page
     And I see search results
