@@ -1,5 +1,3 @@
-Below is a sample README file for a Selenium-Cucumber BDD (Behavior-Driven Development) project with Gherkin syntax for writing reusable steps:
-
 ---
 
 # Selenium-Cucumber BDD Framework with Gherkin Reusable Steps
