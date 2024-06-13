@@ -75,9 +75,9 @@ public class CommonActions {
 		findElement(getXpath(field)).sendKeys(text);
 	}
 
-	private String getText(String xpath) {
-		this.waitUntilExpectedCondition(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
-		return this.findElement(xpath).getText();
+	public static String getText(String field) {
+		waitUntilExpectedCondition(ExpectedConditions.presenceOfElementLocated(getXpath(field)));
+		return findElement(getXpath(field)).getText();
 	}
 
 	private static void waitUntilExpectedCondition(ExpectedCondition<WebElement> expectedCondition) {
@@ -90,9 +90,9 @@ public class CommonActions {
 		wait.until(expectedCondition);
 	}
 
-	public static boolean isElementDisplayed(String xpath) {
+	public static boolean isElementDisplayed(String field) {
 		try {
-			return findElement(xpath).isDisplayed();
+			return findElement(field).isDisplayed();
 		} catch (Exception e) {
 			return false;
 		}

@@ -13,4 +13,5 @@ Feature: Verify search
     When I enter "uncommon word" in the "searchTextBox"
     And I click on "searchButton"
     Then I am on "SearchResults" page
-    And I see search results
+    And "firstResult" is displayed
+    And text of "totalResults" is "5,495"

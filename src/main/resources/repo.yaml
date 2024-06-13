@@ -4,4 +4,7 @@ HomePage:
  searchButton: "//button/i[text()='Search']"
 SearchResultsPage:
  header: "//h1[text()='Search results']"
+ firstResult: "//*[@class='mw-search-results']//li[1]"
+ totalResults: "//div[@class='results-info']/strong[2]"
+
 

@@ -41,4 +41,18 @@ public class CommonUISteps {
     public void iClickOn(String field) {
         CommonActions.click(field);
     }
+
+    @Then("I see {string} text is {string}")
+    public void iSeeTextIs(String field, String expected) {
+
+    }
+
+    @Then("{string} is displayed")
+    public void isDisplayed(String field) {
+        Assert.assertTrue("Text is not expected", CommonActions.isElementDisplayed(field));
+    }
+    @Then("text of {string} is {string}")
+    public void textOfFieldIs(String field, String expected) {
+        Assert.assertEquals("Text is not expected", expected, CommonActions.getText(field));
+    }
 }
