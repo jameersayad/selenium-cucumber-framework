@@ -27,8 +27,11 @@ public class CommonActions {
 		currentPagelocators = repository.get(page);
 	}
 
+	public static By getXpath(String field){
+		return By.xpath(currentPagelocators.get(field));
+	}
 	public static void navigateTo(String url) {
-		DriverManager.getDriver().navigate().to(url);
+		DriverManager.getDriver().get(url);
 		maximizeApplication();
 	}
 
@@ -47,31 +50,34 @@ public class CommonActions {
 		return takesScreenshot.getScreenshotAs(OutputType.BYTES);
 	}
 
-	private static WebElement findElement(String xpath) {
-		return DriverManager.getDriver().findElement(By.xpath(currentPagelocators.get(xpath)));
+
+	private static WebElement findElement(String field) {
+		return DriverManager.getDriver().findElement(getXpath(field));
 	}
 
 	private static WebElement findElement(By xpath) {
 		return DriverManager.getDriver().findElement(xpath);
 	}
 
-	public static void click(String xpath) {
-		waitUntilExpectedCondition(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
-		findElement(xpath).click();
+	public static void click(String field) {
+		waitUntilExpectedCondition(ExpectedConditions.elementToBeClickable(getXpath(field)));
+		findElement(getXpath(field)).click();
 	}
 
 	public static void doubleClick() {
 		// TODO
 	}
 
-	public static void enterText(String xpath, String text) {
-		waitUntilExpectedCondition(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
-		findElement(xpath).sendKeys(text);
+
+	public static void enterText(String field, String text) {
+
+		waitUntilExpectedCondition(ExpectedConditions.elementToBeClickable(getXpath(field)));
+		findElement(getXpath(field)).sendKeys(text);
 	}
 
-	private String getText(String xpath) {
-		this.waitUntilExpectedCondition(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
-		return this.findElement(xpath).getText();
+	public static String getText(String field) {
+		waitUntilExpectedCondition(ExpectedConditions.presenceOfElementLocated(getXpath(field)));
+		return findElement(getXpath(field)).getText();
 	}
 
 	private static void waitUntilExpectedCondition(ExpectedCondition<WebElement> expectedCondition) {
@@ -84,11 +90,14 @@ public class CommonActions {
 		wait.until(expectedCondition);
 	}
 
-	public static boolean isElementDisplayed(String xpath) {
+	public static boolean isElementDisplayed(String field) {
 		try {
-			return findElement(xpath).isDisplayed();
+			return findElement(field).isDisplayed();
 		} catch (Exception e) {
 			return false;
 		}
+	}
+	public static String getTitle(){
+		return DriverManager.getDriver().getTitle();
 	}
 }

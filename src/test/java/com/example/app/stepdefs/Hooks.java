@@ -20,7 +20,7 @@ public class Hooks {
 
 	@Before
 	public void before(Scenario scenario) {
-		CommonActions.navigateTo(TestContext.getTestContext().getApplicationProperty("appUrl"));
+//		CommonActions.navigateTo(TestContext.getTestContext().getApplicationProperty("appUrl"));
 	}
 
 	@After
