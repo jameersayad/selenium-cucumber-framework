@@ -97,7 +97,29 @@ public class CommonActions {
 			return false;
 		}
 	}
+
+	public static boolean isElementEnabled(String field) {
+		try {
+			waitUntilExpectedCondition(ExpectedConditions.visibilityOfElementLocated(getXpath(field)));
+			return findElement(field).isEnabled();
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public static boolean isElementDisabled(String field) {
+		try {
+			waitUntilExpectedCondition(ExpectedConditions.visibilityOfElementLocated(getXpath(field)));
+			return !findElement(field).isEnabled();
+		} catch (Exception e) {
+			return false;
+		}
+	}
 	public static String getTitle(){
 		return DriverManager.getDriver().getTitle();
+	}
+
+	public static String getElementAttribute(String field, String attribute){
+		return findElement(field).getAttribute(attribute);
 	}
 }

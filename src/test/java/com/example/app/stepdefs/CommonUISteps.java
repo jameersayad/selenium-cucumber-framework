@@ -2,6 +2,7 @@ package com.example.app.stepdefs;
 
 import com.example.app.DriverManager;
 import com.example.app.TestContext;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import org.junit.Assert;
 
@@ -28,7 +29,7 @@ public class CommonUISteps {
         Assert.assertTrue(page, CommonActions.isElementDisplayed("header"));
     }
 
-    @Given("the title is {string}")
+    @Then("the title is {string}")
     public void theTitleIs(String title) {
         Assert.assertEquals("Title is not as expected", title, CommonActions.getTitle());
     }
@@ -42,17 +43,28 @@ public class CommonUISteps {
         CommonActions.click(field);
     }
 
-    @Then("I see {string} text is {string}")
-    public void iSeeTextIs(String field, String expected) {
-
-    }
-
     @Then("{string} is displayed")
     public void isDisplayed(String field) {
         Assert.assertTrue("Text is not expected", CommonActions.isElementDisplayed(field));
     }
+
+    @Then("{string} is enabled")
+    public void isEnabled(String field) {
+        Assert.assertTrue(field+" is not enabled", CommonActions.isElementEnabled(field));
+    }
+
+    @Then("{string} is disabled")
+    public void isDisabled(String field) {
+        Assert.assertTrue(field+" is not disabled", CommonActions.isElementEnabled(field));
+    }
     @Then("text of {string} is {string}")
     public void textOfFieldIs(String field, String expected) {
         Assert.assertEquals("Text is not expected", expected, CommonActions.getText(field));
+    }
+
+    @Then("I take screenshot")
+    public void iTakeScreenshot() {
+        byte[] screenshot = CommonActions.takeScreenshot();
+        TestContext.getTestContext().getScenario().attach(screenshot, "image/png", "screenshot");
     }
 }

@@ -2,14 +2,13 @@ package com.example.app;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
-
-import org.yaml.snakeyaml.Yaml;
+import io.cucumber.java.Scenario;
 
 public class TestContext {
 	private static TestContext testContext;
+
+	private Scenario scenario;
 	private Properties properties;
 	public static TestContext getTestContext(){
 		if(testContext == null) {
@@ -37,5 +36,11 @@ public class TestContext {
 	
 	public String getApplicationProperty(String property){
 		return properties.getProperty(property);
-	}	
+	}
+
+	public void setScenario(Scenario scenario) {
+		this.scenario= scenario;
+	}public Scenario getScenario() {
+		return scenario;
+	}
 }

@@ -14,4 +14,5 @@ Feature: Verify search
     And I click on "searchButton"
     Then I am on "SearchResults" page
     And "firstResult" is displayed
-    And text of "totalResults" is "5,495"
+    And text of "totalResults" is "5,499"
+    And I take screenshot

@@ -20,14 +20,13 @@ public class Hooks {
 
 	@Before
 	public void before(Scenario scenario) {
-//		CommonActions.navigateTo(TestContext.getTestContext().getApplicationProperty("appUrl"));
+		TestContext.getTestContext().setScenario(scenario);
 	}
 
 	@After
 	public void after(Scenario scenario) {
 		if (!scenario.getStatus().equals(Status.PASSED)) {
-			byte[] screenshot = CommonActions.takeScreenshot();
-			scenario.attach(screenshot, "image/png", "screenshot");
+			CommonActions.takeScreenshot();
 		}
 		CommonActions.closeApplication();
 	}
