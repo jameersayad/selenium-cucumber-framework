@@ -16,3 +16,7 @@ Feature: Verify search
     And "firstResult" is displayed
     And text of "totalResults" is "5,499"
     And I take screenshot
+#//checkbox
+#    //select
+#  cssvalue
+#  attribute
