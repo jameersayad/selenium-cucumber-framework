@@ -67,4 +67,19 @@ public class CommonUISteps {
         byte[] screenshot = CommonActions.takeScreenshot();
         TestContext.getTestContext().getScenario().attach(screenshot, "image/png", "screenshot");
     }
+
+    @When("I select {string} from dropdown {string}")
+    public void iSelectTextFromDropDown(String value, String field) {
+        CommonActions.selectTextFromDropDown(field, value);
+    }
+
+    @When("I select option {int} from dropdown {string}")
+    public void iSelectOptionFromTheDropdown(int option, String field) {
+        CommonActions.selectIndexFromDropDown(field, option);
+    }
+
+    @When("I select value {string} from dropdown {string}")
+    public void iSelectValueFromDropDown(String value, String field) {
+        CommonActions.selectValueFromDropDown(field, value);
+    }
 }
