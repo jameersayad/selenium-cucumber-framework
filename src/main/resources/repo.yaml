@@ -1,6 +1,7 @@
 HomePage:
  header: "//h1/span[contains(text(),'Wikipedia')]"
  searchTextBox: "//input[@id='searchInput']"
+ searchLanguage: "//select[@id='searchLanguage']"
  searchButton: "//button/i[text()='Search']"
 SearchResultsPage:
  header: "//h1[text()='Search results']"

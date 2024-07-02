@@ -2,6 +2,8 @@ package com.example.app;
 
 import java.io.InputStream;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
@@ -10,6 +12,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.yaml.snakeyaml.Yaml;
 
@@ -45,7 +48,6 @@ public class CommonActions {
 	}
 
 	public static byte[] takeScreenshot() {
-		// TODO
 		TakesScreenshot takesScreenshot = (TakesScreenshot) DriverManager.getDriver();
 		return takesScreenshot.getScreenshotAs(OutputType.BYTES);
 	}
@@ -58,6 +60,13 @@ public class CommonActions {
 	private static WebElement findElement(By xpath) {
 		return DriverManager.getDriver().findElement(xpath);
 	}
+
+	private static List<WebElement> findElements(By xpath) {
+		// TODO
+//		waitUntilExpectedCondition(ExpectedConditions.numberOfElementsToBeMoreThan(xpath,0));
+		return DriverManager.getDriver().findElements(xpath);
+	}
+
 
 	public static void click(String field) {
 		waitUntilExpectedCondition(ExpectedConditions.elementToBeClickable(getXpath(field)));
@@ -85,7 +94,49 @@ public class CommonActions {
 		wait.until(expectedCondition);
 	}
 
-	private void waitUntilExpectedCondition(ExpectedCondition<WebElement> expectedCondition, int timeInSeconds) {
+    public static void selectTextFromDropDown(String field, String text) {
+		waitUntilExpectedCondition(ExpectedConditions.presenceOfElementLocated(getXpath(field)));
+		Select select=new Select(findElement(getXpath(field)));
+		select.selectByVisibleText(text);
+    }
+
+	public static void selectValueFromDropDown(String field, String value) {
+		waitUntilExpectedCondition(ExpectedConditions.presenceOfElementLocated(getXpath(field)));
+		Select select=new Select(findElement(getXpath(field)));
+		select.selectByValue(value);
+	}
+
+	public static void selectIndexFromDropDown(String field, int index) {
+		waitUntilExpectedCondition(ExpectedConditions.presenceOfElementLocated(getXpath(field)));
+		Select select=new Select(findElement(getXpath(field)));
+		select.selectByIndex(index);
+	}
+
+	public static void deselectAllFromDropDown(String field) {
+		waitUntilExpectedCondition(ExpectedConditions.presenceOfElementLocated(getXpath(field)));
+		Select select=new Select(findElement(getXpath(field)));
+		select.deselectAll();
+	}
+	public static List<WebElement> getAllSelectedOptionsFromDropDown(String field) {
+		waitUntilExpectedCondition(ExpectedConditions.visibilityOfElementLocated(getXpath(field)));
+		Select select=new Select(findElement(getXpath(field)));
+		return select.getAllSelectedOptions();
+	}
+
+	public static List<WebElement> getAllOptionsFromDropDown(String field) {
+		waitUntilExpectedCondition(ExpectedConditions.visibilityOfElementLocated(getXpath(field)));
+		Select select=new Select(findElement(getXpath(field)));
+		return select.getOptions();
+	}
+
+	public static List<String> getTextOfAllElements(List<WebElement> elements) {
+		List<String> elementsText= new ArrayList<>();
+		for(WebElement element : elements){
+			elementsText.add(element.getText());
+		}
+		return elementsText;
+	}
+    private void waitUntilExpectedCondition(ExpectedCondition<WebElement> expectedCondition, int timeInSeconds) {
 		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(timeInSeconds));
 		wait.until(expectedCondition);
 	}
