@@ -198,10 +198,42 @@ public class CommonActions {
     public static void refreshPage() {
         DriverManager.getDriver().navigate().refresh();
     }
+
+    public static String acceptAlert(){
+        waitUntilExpectedCondition(ExpectedConditions.alertIsPresent());
+        Alert alert=DriverManager.getDriver().switchTo().alert();
+        String text= alert.getText();
+        alert.accept();
+        return text;
+    }
+
+    public static String dismissAlert(){
+        waitUntilExpectedCondition(ExpectedConditions.alertIsPresent());
+        Alert alert=DriverManager.getDriver().switchTo().alert();
+        String text= alert.getText();
+        alert.dismiss();
+        return text;
+    }
+
+    public static void switchToFrame(String nameOrId){
+        waitUntilExpectedCondition(ExpectedConditions.frameToBeAvailableAndSwitchToIt(nameOrId));
+        DriverManager.getDriver().switchTo().frame(nameOrId);
+    }
+
+    public static void switchToFrame(int index){
+        waitUntilExpectedCondition(ExpectedConditions.frameToBeAvailableAndSwitchToIt(index));
+        DriverManager.getDriver().switchTo().frame(index);
+    }
+
+    public static void switchToFrame(By locator){
+        waitUntilExpectedCondition(ExpectedConditions.frameToBeAvailableAndSwitchToIt(locator));
+        DriverManager.getDriver().switchTo().frame(findElement(locator));
+    }
+
+    public static void switchToParentFrame(){
+        DriverManager.getDriver().switchTo().parentFrame();
+    }
     //TODO
     //doAction
-    //acceptalert
-    //dismissalert
-    //switch frame
     //highlight element and capture
 }
