@@ -233,7 +233,19 @@ public class CommonActions {
     public static void switchToParentFrame(){
         DriverManager.getDriver().switchTo().parentFrame();
     }
+
+    // Draws a red border around the found element. Does not set it back anyhow.
+    public WebElement highLightElement(String field) {
+        WebElement elem = findElement(field);
+        // draw a border around the found element
+        if (DriverManager.getDriver() instanceof JavascriptExecutor) {
+            ((JavascriptExecutor)DriverManager.getDriver()).executeScript("arguments[0].style.border='3px solid red'", elem);
+        }
+        return elem;
+    }
     //TODO
     //doAction
+    //javascript
+    //scroll
     //highlight element and capture
 }
