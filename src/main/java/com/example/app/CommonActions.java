@@ -243,9 +243,25 @@ public class CommonActions {
         }
         return elem;
     }
+
+    public void scrollDown(){
+        executeJavaScript("window.scrollBy(0, 1000);");
+    }
+
+    public void scrollToElement(String field){
+        WebElement element =findElement(field);
+        executeJavaScript("arguments[0].scrollIntoView(true);", element);
+    }
+    public Object executeJavaScript(String javaScript){
+        JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+        return js.executeScript(javaScript);
+    }
+
+    public Object executeJavaScript(String javaScript, WebElement element){
+        JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+        return js.executeScript(javaScript, element);
+    }
     //TODO
+    //Actions
     //doAction
-    //javascript
-    //scroll
-    //highlight element and capture
 }
