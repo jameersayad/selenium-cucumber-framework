@@ -82,4 +82,9 @@ public class CommonUISteps {
     public void iSelectValueFromDropDown(String value, String field) {
         CommonActions.selectValueFromDropDown(field, value);
     }
+
+    @Then("file {string} is downloaded")
+    public void assertfileIsDownloaded(String file) {        
+        Assert.assertNotEqual("File is not downloaded :"+file, null, CommonActions.getRecentDownloadedFile());
+    }
 }
