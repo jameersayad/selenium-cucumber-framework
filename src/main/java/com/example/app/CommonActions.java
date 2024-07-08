@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -262,6 +263,49 @@ public class CommonActions {
         return js.executeScript(javaScript, element);
     }
     //TODO
-    //Actions
     //doAction
+public static <T> void doAction(String locator, CommonActions.Events event){
+    Actions actions = new Actions(DriverManager.getDriver());
+    switch (event) {
+        case CLICK:
+            click(locator);
+            break;
+        case DOUBLE_CLICK:
+            actions.doubleClick(findElement(locator)).build().perform();
+            break;
+        case RIGHT_CLICK:
+            actions.contextClick(findElement(locator)).build().perform();
+            break;
+        case CTRL_CLICK:
+            actions.keyDown(Keys.LEFT_CONTROL).click(findElement(locator)).keyUp(Keys.LEFT_CONTROL).build().perform();
+            break;
+        case SHIFT_CLICK:
+            actions.keyDown(Keys.LEFT_SHIFT).click(findElement(locator)).keyUp(Keys.LEFT_SHIFT).build().perform();
+            break;
+        case MOUSE_HOVER:
+            actions.moveToElement(findElement(locator)).build().perform();
+            break;
+        case ENTER_KEY:
+            actions.keyDown(findElement(locator),Keys.ENTER).build().perform();
+            break;
+        case ESC_KEY:
+            actions.keyDown(findElement(locator),Keys.ESCAPE).build().perform();
+            break;
+
+    }
+}
+    public static enum Events{
+        CLICK,
+        DOUBLE_CLICK,
+        CTRL_CLICK,
+        RIGHT_CLICK,
+        SHIFT_CLICK,
+        MOUSE_UP,
+        MOUSE_DOWN,
+        MOUSE_HOVER,
+        ENTER_KEY,
+        ESC_KEY;
+
+        private Events(){}
+    }
 }
