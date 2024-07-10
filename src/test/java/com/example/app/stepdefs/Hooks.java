@@ -26,7 +26,8 @@ public class Hooks {
 	@After
 	public void after(Scenario scenario) {
 		if (!scenario.getStatus().equals(Status.PASSED)) {
-			CommonActions.takeScreenshot();
+			byte[] screenshot = CommonActions.takeScreenshot();
+			TestContext.getTestContext().getScenario().attach(screenshot, "image/png", "screenshot");
 		}
 		CommonActions.closeApplication();
 	}

@@ -1,15 +1,13 @@
 package com.example.app.stepdefs;
 
+import com.example.app.CommonActions;
 import com.example.app.DriverManager;
 import com.example.app.TestContext;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Then;
-import org.junit.Assert;
-
-import com.example.app.CommonActions;
-
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
 
 public class CommonUISteps {
 
@@ -25,7 +23,7 @@ public class CommonUISteps {
 
     @Given("I am on {string} page")
     public void i_am_on_page(String page) {
-        CommonActions.loadCurrentPageLocators(String.format("%sPage", page));
+        CommonActions.loadCurrentPageLocators(page);
         Assert.assertTrue(page, CommonActions.isElementDisplayed("header"));
     }
 
@@ -38,6 +36,7 @@ public class CommonUISteps {
     public void iEnterInThe(String text, String field) {
         CommonActions.enterText(field, text);
     }
+
     @When("I click on {string}")
     public void iClickOn(String field) {
         CommonActions.click(field);
@@ -45,18 +44,24 @@ public class CommonUISteps {
 
     @Then("{string} is displayed")
     public void isDisplayed(String field) {
-        Assert.assertTrue("Text is not expected", CommonActions.isElementDisplayed(field));
+        Assert.assertTrue(field + " is not displayed", CommonActions.isElementDisplayed(field));
+    }
+
+    @Then("{string} is not displayed")
+    public void isNotDisplayed(String field) {
+        Assert.assertFalse(field + " is displayed", CommonActions.isElementDisplayed(field));
     }
 
     @Then("{string} is enabled")
     public void isEnabled(String field) {
-        Assert.assertTrue(field+" is not enabled", CommonActions.isElementEnabled(field));
+        Assert.assertTrue(field + " is not enabled", CommonActions.isElementEnabled(field));
     }
 
     @Then("{string} is disabled")
     public void isDisabled(String field) {
-        Assert.assertTrue(field+" is not disabled", CommonActions.isElementEnabled(field));
+        Assert.assertTrue(field + " is not disabled", CommonActions.isElementEnabled(field));
     }
+
     @Then("text of {string} is {string}")
     public void textOfFieldIs(String field, String expected) {
         Assert.assertEquals("Text is not expected", expected, CommonActions.getText(field));
@@ -84,7 +89,12 @@ public class CommonUISteps {
     }
 
     @Then("file {string} is downloaded")
-    public void assertfileIsDownloaded(String file) {        
-        Assert.assertNotEqual("File is not downloaded :"+file, null, CommonActions.getRecentDownloadedFile());
+    public void assertfileIsDownloaded(String file) {
+        Assert.assertNotEquals("File is not downloaded :" + file, null, CommonActions.getRecentDownloadedFile());
+    }
+
+    @And("text of {string} contains {string}")
+    public void textOfContains(String field, String expected) {
+        Assert.assertTrue("Text is not expected", CommonActions.getText(field).contains(expected));
     }
 }

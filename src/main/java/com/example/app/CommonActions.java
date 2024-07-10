@@ -1,11 +1,9 @@
 package com.example.app;
 
+import java.io.File;
 import java.io.InputStream;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -41,6 +39,7 @@ public class CommonActions {
     public static void closeApplication() {
         DriverManager.getDriver().close();
         DriverManager.getDriver().quit();
+        DriverManager.setDriver(null);
     }
 
     public static void maximizeApplication() {
@@ -233,6 +232,20 @@ public class CommonActions {
 
     public static void switchToParentFrame(){
         DriverManager.getDriver().switchTo().parentFrame();
+    }
+
+    public static String getRecentDownloadedFile() {
+        String sdir=TestContext.getTestContext().getApplicationProperty("download.dir");
+        File dir = new File(sdir);
+        if (dir.isDirectory()) {
+            Optional<File> opFile = Arrays.stream(dir.listFiles(File::isFile))
+                    .max((f1, f2) -> Long.compare(f1.lastModified(), f2.lastModified()));
+
+            if (opFile.isPresent()){
+                return opFile.get().getName();
+            }
+        }
+        return null;
     }
 
     // Draws a red border around the found element. Does not set it back anyhow.

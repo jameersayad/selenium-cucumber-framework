@@ -1,5 +1,6 @@
 package com.example.app;
 
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,17 +28,23 @@ public class DriverManager {
         return driver;
     }
 
+    public static void setDriver(WebDriver webdriver) {
+        driver = webdriver;
+    }
+
     private static WebDriver createDriver() {
-        
+
         return createDriver("chrome");
     }
 
     private static WebDriver createDriver(String browser) {
+        var downloadDir = Paths.get("target").toAbsolutePath().toString();
+
         /**CHROME/Edge Options */
         // Create a map to set preferences
         Map<String, Object> prefs = new HashMap<>();
         TestContext.getTestContext().getApplicationProperty("");
-        prefs.put("download.default_directory", TestContext.getTestContext().getApplicationProperty("download.dir")); // Change the path to your desired download directory
+        prefs.put("download.default_directory", downloadDir); // Change the path to your desired download directory
         prefs.put("download.prompt_for_download", false);
         prefs.put("download.directory_upgrade", true);
         prefs.put("plugins.always_open_pdf_externally", true); // Disable the built-in PDF viewer
@@ -51,7 +58,7 @@ public class DriverManager {
         FirefoxProfile profile = new FirefoxProfile();
 
         // Set preferences for the profile
-        profile.setPreference("browser.download.dir", TestContext.getTestContext().getApplicationProperty("download.dir"));
+        profile.setPreference("browser.download.dir", downloadDir);
         profile.setPreference("browser.download.folderList", 2);
         profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/pdf"); // MIME type
         profile.setPreference("pdfjs.disabled", true); // Disable the built-in PDF viewer

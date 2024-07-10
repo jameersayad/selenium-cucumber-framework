@@ -1,11 +1,15 @@
-HomePage:
- header: "//h1/span[contains(text(),'Wikipedia')]"
- searchTextBox: "//input[@id='searchInput']"
- searchLanguage: "//select[@id='searchLanguage']"
- searchButton: "//button/i[text()='Search']"
-SearchResultsPage:
- header: "//h1[text()='Search results']"
- firstResult: "//*[@class='mw-search-results']//li[1]"
- totalResults: "//div[@class='results-info']/strong[2]"
+Home:
+  header: "//h1/span[contains(text(),'Wikipedia')]"
+  searchTextBox: "//input[@id='searchInput']"
+  searchLanguage: "//select[@id='searchLanguage']"
+  searchButton: "//button/i[text()='Search']"
+SearchResults:
+  header: "//h1[text()='Search results']"
+  searchResults: "//div[contains(@class,'searchresults')]"
+  firstResult: "//*[@class='mw-search-results']//li[1]"
+  totalResults: "//div[@class='results-info']/strong[2]"
+Content:
+  header: "//*[@id='firstHeading']"
+
 
 

@@ -1,11 +1,11 @@
-package selenium;
+package com.example.app;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import managers.FileReaderManager;
 
 /**
  * The Wait class provides utility methods to wait for certain conditions 
@@ -19,7 +19,7 @@ public class Wait {
      * @param driver the WebDriver instance
      */
     public static void untilJqueryIsDone(WebDriver driver){
-        untilJqueryIsDone(driver, FileReaderManager.getInstance().getConfigReader().getImplicitlyWait());
+        untilJqueryIsDone(driver, Duration.ofSeconds(10));
     }
 
     /**
@@ -28,7 +28,7 @@ public class Wait {
      * @param driver the WebDriver instance
      * @param timeoutInSeconds the maximum time to wait in seconds
      */
-    public static void untilJqueryIsDone(WebDriver driver, Long timeoutInSeconds){
+    public static void untilJqueryIsDone(WebDriver driver, Duration timeoutInSeconds){
         until(driver, (d) -> {
             Boolean isJqueryCallDone = (Boolean)((JavascriptExecutor) driver).executeScript("return jQuery.active==0");
             if (!isJqueryCallDone) System.out.println("JQuery call is in Progress");
@@ -42,7 +42,7 @@ public class Wait {
      * @param driver the WebDriver instance
      */
     public static void untilPageLoadComplete(WebDriver driver) {
-        untilPageLoadComplete(driver, FileReaderManager.getInstance().getConfigReader().getImplicitlyWait());
+        untilPageLoadComplete(driver, 10L);
     }
 
     /**
@@ -56,7 +56,7 @@ public class Wait {
             Boolean isPageLoaded = (Boolean)((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
             if (!isPageLoaded) System.out.println("Document is loading");
             return isPageLoaded;
-        }, timeoutInSeconds);
+        }, Duration.ofSeconds(10));
     }
 
     /**
@@ -66,7 +66,7 @@ public class Wait {
      * @param waitCondition the condition to wait for
      */
     public static void until(WebDriver driver, Function<WebDriver, Boolean> waitCondition){
-        until(driver, waitCondition, FileReaderManager.getInstance().getConfigReader().getImplicitlyWait());
+        until(driver, waitCondition, Duration.ofSeconds(10));
     }
 
     /**
@@ -76,9 +76,9 @@ public class Wait {
      * @param waitCondition the condition to wait for
      * @param timeoutInSeconds the maximum time to wait in seconds
      */
-    private static void until(WebDriver driver, Function<WebDriver, Boolean> waitCondition, Long timeoutInSeconds){
+    private static void until(WebDriver driver, Function<WebDriver, Boolean> waitCondition, Duration timeoutInSeconds){
         WebDriverWait webDriverWait = new WebDriverWait(driver, timeoutInSeconds);
-        webDriverWait.withTimeout(timeoutInSeconds, TimeUnit.SECONDS);
+        webDriverWait.withTimeout(timeoutInSeconds);
         try{
             webDriverWait.until(waitCondition);
         } catch (Exception e){
