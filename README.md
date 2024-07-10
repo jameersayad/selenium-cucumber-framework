@@ -4,15 +4,15 @@
 
 ## Introduction
 
-This repository contains a sample project demonstrating how to implement a Selenium-Cucumber BDD framework using Gherkin syntax with reusable steps. The framework is designed to facilitate efficient testing of web applications by integrating Selenium WebDriver with Cucumber and organizing test scenarios using Gherkin's human-readable syntax.
+Welcome to the Open Source Selenium-java and Cucumber Test Automation Framework! This project is designed to help test automation engineers quickly automate web UI applications across multiple browsers, including Chrome, Microsoft Edge, and Firefox.
 
 ## Features
 
-- Integration of Selenium WebDriver for browser automation.
-- Utilization of Cucumber for writing feature files in Gherkin syntax.
-- Implementation of reusable step definitions for common actions.
-- Modular design for easy scalability and maintenance of test suites.
-- Flexibility to extend with additional custom steps as per project requirements.
+- **Cross-Browser Testing**: Supports automation on Chrome, Microsoft Edge, and Firefox.
+- **Ready-Made Boilerplate Code**: Comes with pre-configured Selenium, Java, and Cucumber setups.
+- **Reusable Steps**: Includes a library of reusable steps to simplify writing new test scenarios.
+- **Easy to Start**: Enables test automation engineers to begin automation from day one with minimal setup.
+- **Scalable and Maintainable**: Designed with best practices to ensure the framework is scalable and maintainable.
 
 ## Prerequisites
 
@@ -21,7 +21,7 @@ Before running the tests, ensure that the following prerequisites are met:
 - **Java Development Kit (JDK):** Install JDK 8 or higher.
 - **Maven:** Ensure Maven is installed on your system.
 - **IDE (Integrated Development Environment):** Recommended IDEs include IntelliJ IDEA, Eclipse, or Visual Studio Code.
-- **Web Browser:** Chrome, Firefox, or any other supported browser should be installed.
+- **Web Browser:** Chrome, Firefox and MSedge. 
 
 ## Getting Started
 
@@ -29,12 +29,12 @@ To get started with the project, follow these steps:
 
 1. **Clone the Repository:**
    ```
-   git clone https://github.com/yourusername/selenium-cucumber-bdd.git
+   git clone https://github.com/jameersayad/selenium-cucumber-framework.git
    ```
 
 2. **Navigate to Project Directory:**
    ```
-   cd selenium-cucumber-bdd
+   cd selenium-cucumber-framework
    ```
 
 3. **Install Dependencies:**
@@ -62,44 +62,64 @@ Feature files are written in Gherkin syntax and are located in the `src/test/res
 
 Example Feature File (`login.feature`):
 ```gherkin
-Feature: Login Functionality
+@Search
+Feature: Wikipedia Search Functionality
 
-  Scenario: Successful Login
-    Given I navigate to the login page
-    When I enter username "user123" and password "password123"
-    And I click the login button
-    Then I should be logged in successfully
+  Background:
+    Given I open browser
+    And navigate to application
+
+  @tag1
+  Scenario: Search for a existing term
+    And I am on "Home" page
+    And the title is "Wikipedia"
+    When I enter "Selenium" in the "searchTextBox"
+    And I select "English" from dropdown "searchLanguage"
+    And I click on "searchButton"
+    Then I am on "Content" page
+    And text of "header" is "Selenium"
+    And I take screenshot
+
+  @tag2
+  Scenario: Search for a non-existing term
+    And I am on "Home" page
+    And the title is "Wikipedia"
+    When I enter "abcxyz123" in the "searchTextBox"
+    And I select "English" from dropdown "searchLanguage"
+    And I click on "searchButton"
+    Then I am on "SearchResults" page
+    And "firstResult" is not displayed
+    And text of "searchResults" contains "There were no results matching the query."
+    And I take screenshot
+
+  @tag3
+  Scenario: Search for a generic term
+    And I am on "Home" page
+    And the title is "Wikipedia"
+    When I enter "uncommon word" in the "searchTextBox"
+    And I select "English" from dropdown "searchLanguage"
+    And I click on "searchButton"
+    Then I am on "SearchResults" page
+    And "firstResult" is displayed
+    And text of "totalResults" is "5,499"
+    And I take screenshot
 ```
+## Maintainers
 
-## Writing Reusable Steps
+This project is maintained by:
 
-Reusable steps are implemented as Java methods in the step definition classes located in the `src/test/java/stepDefinitions` directory. These steps can be reused across multiple feature files to promote code reusability and maintainability.
+- [Jameer](https://github.com/jameersayad)
+- [Rameez](https://github.com/rameezhazra2022)
+- [Abhishek](https://github.com/myofficework000)
 
-Example Step Definition (`LoginStepDefinitions.java`):
-```java
-public class LoginStepDefinitions {
+## Contributors
 
-    @Given("^I navigate to the login page$")
-    public void navigateToLoginPage() {
-        // Code to navigate to the login page
-    }
+Thanks to all the contributors who have helped make this project better!
 
-    @When("^I enter username \"([^\"]*)\" and password \"([^\"]*)\"$")
-    public void enterCredentials(String username, String password) {
-        // Code to enter username and password
-    }
+[![Contributors](https://contrib.rocks/image?repo=jameersayad/selenium-cucumber-framework)](https://github.com/jameersayad/selenium-cucumber-framework/graphs/contributors)
 
-    @When("^I click the login button$")
-    public void clickLoginButton() {
-        // Code to click the login button
-    }
+You can see the full list of contributors [here](https://github.com/jameersayad/selenium-cucumber-framework/graphs/contributors).
 
-    @Then("^I should be logged in successfully$")
-    public void verifyLoginSuccess() {
-        // Code to verify successful login
-    }
-}
-```
 
 ## Contributing
 
