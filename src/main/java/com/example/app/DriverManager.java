@@ -33,7 +33,6 @@ public class DriverManager {
     }
 
     private static WebDriver createDriver() {
-
         return createDriver("chrome");
     }
 
@@ -77,6 +76,4 @@ public class DriverManager {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         return driver;
     }
-
-
 }
